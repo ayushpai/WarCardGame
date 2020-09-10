@@ -28,9 +28,11 @@ public class GameActivity extends AppCompatActivity {
                 //use basic logic to create a random variable to select a random card
                 cpuCardValue = new Random().nextInt((14 - 2) + 1) + 2;
                 yourCardValue = new Random().nextInt((14 - 2) + 1) + 2;
+                
                 //A simple method to set the card to the correct image
                 // (For example, if it is a 5, it will set a card worth 5)
                 setCard(cpuCardValue, yourCardValue);
+                
                 //Use basic logic to give a point to the CPU if the user has the lower card
                 if(cpuCardValue > yourCardValue){
                     cpuscore = cpuscore + 1;
@@ -44,6 +46,7 @@ public class GameActivity extends AppCompatActivity {
                     yourscore++;
                     cpuscore++;
                 }
+                
                 //Set the score to a text box so the use can see it
                 cpuScoreText.setText(String.valueOf(cpuscore));
                 yourScoreText.setText(String.valueOf(yourscore));
