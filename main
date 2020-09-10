@@ -1,0 +1,65 @@
+// Define The Class
+public class GameActivity extends AppCompatActivity {
+
+    //Set The Variables for the images and buttons
+    ImageView cpucard, yourcard, dealBtn;
+    TextView yourScoreText, cpuScoreText;
+    int cpuscore, yourscore = 0;
+    int cpuCardValue, yourCardValue;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    
+        //Connect the java class to the UI
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game);
+        Random r = new Random();
+        cpucard = findViewById(R.id.cpucard);
+        yourcard = findViewById(R.id.yourcard);
+        dealBtn = findViewById(R.id.dealbtn);
+        yourScoreText = findViewById(R.id.yourscore);
+        cpuScoreText = findViewById(R.id.cpuscore);
+
+        //Set what happens when you click on the deal button
+        dealBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //use basic logic to create a random variable to select a random card
+                cpuCardValue = new Random().nextInt((14 - 2) + 1) + 2;
+                yourCardValue = new Random().nextInt((14 - 2) + 1) + 2;
+                //A simple method to set the card to the correct image
+                // (For example, if it is a 5, it will set a card worth 5)
+                setCard(cpuCardValue, yourCardValue);
+                //Use basic logic to give a point to the CPU if the user has the lower card
+                if(cpuCardValue > yourCardValue){
+                    cpuscore = cpuscore + 1;
+                }
+                //Use basic logic to give a point to the user if the CPU has the lower card
+                else if(cpuCardValue < yourCardValue){
+                    yourscore = yourscore + 1;
+                }
+                //Use basic logic to give both players a point if they draw the same card
+                else if(cpuCardValue == yourCardValue){
+                    yourscore++;
+                    cpuscore++;
+                }
+                //Set the score to a text box so the use can see it
+                cpuScoreText.setText(String.valueOf(cpuscore));
+                yourScoreText.setText(String.valueOf(yourscore));
+
+                // Tell the user if they won or not based on the final score and who hits 15 first
+                if(cpuscore == 15 && cpuscore == yourscore){
+                    startActivity(new Intent(GameActivity.this, YouTied.class));
+                }
+                else if(yourscore == 15){
+                    startActivity(new Intent(GameActivity.this, YouWon.class));
+                }
+                else if(cpuscore == 15){
+                    startActivity(new Intent(GameActivity.this, YouLost.class));
+                }
+            }
+        });
+
+    }
+}
